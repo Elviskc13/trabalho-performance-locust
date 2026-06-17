@@ -34,10 +34,10 @@ class UsuarioReserva(HttpUser):
         if self.ids_reservas:
             reserva_id = random.choice(self.ids_reservas)
 
-        self.client.get(
-            f"/booking/{reserva_id}",
-            name="GET /booking/{id}"
-        )
+            self.client.get(
+                f"/booking/{reserva_id}",
+                name="GET /booking/{id}"
+            )
     
     @task(2)
     def criar_token_autenticacao(self):
