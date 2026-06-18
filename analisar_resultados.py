@@ -10,6 +10,10 @@ arquivos = {
 
 nomes = []
 tempos_medios = []
+p90_lista = []
+p95_lista = []
+rps_lista = []
+falhas_lista = []
 
 
 for nome_teste, caminho in arquivos.items():
@@ -39,6 +43,10 @@ for nome_teste, caminho in arquivos.items():
 
         nomes.append(nome_teste)
         tempos_medios.append(tempo_medio)
+        p90_lista.append(p90)
+        p95_lista.append(p95)
+        rps_lista.append(rps)
+        falhas_lista.append(total_falhas)
 
 plt.figure()
 plt.bar(nomes, tempos_medios)
@@ -49,3 +57,35 @@ plt.savefig("graficos/tempo_medio_resposta.png")
 plt.close()
 
 print("Gráfico de tempo médio gerado em graficos/tempo_medio_resposta.png")
+
+plt.figure()
+plt.plot(nomes, p90_lista, marker="o", label="p90")
+plt.plot(nomes, p95_lista, marker="o", label="p95")
+plt.title("Percentis p90 e p95")
+plt.xlabel("Carga de usuários")
+plt.ylabel("Tempo de resposta (ms)")
+plt.legend()
+plt.savefig("graficos/percentis_p90_p95.png")
+plt.close()
+
+print("Gráfico de percentis gerado em graficos/percentis_p90_p95.png")
+
+plt.figure()
+plt.bar(nomes, rps_lista)
+plt.title("Requisições por segundo")
+plt.xlabel("Carga de usuários")
+plt.ylabel("Req/s")
+plt.savefig("graficos/throughput.png")
+plt.close()
+
+print("Gráfico de throughput gerado em graficos/throughput.png")
+
+plt.figure()
+plt.bar(nomes, falhas_lista)
+plt.title("Total de falhas")
+plt.xlabel("Carga de usuários")
+plt.ylabel("Quantidade de falhas")
+plt.savefig("graficos/falhas.png")
+plt.close()
+
+print("Gráfico de falhas gerado em graficos/falhas.png")
