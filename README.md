@@ -62,3 +62,105 @@ python -m locust -f locustfile.py --headless -u 150 -r 10 -t 1m --host https://r
 ```
 
 Cada execução gera arquivos CSV com os dados do teste, como número de requisições, falhas, tempo médio de resposta, requisições por segundo.
+
+## Como instalar o projeto
+
+Para executar o projeto localmente, primeiro é necessário instalar as dependências do Python.
+
+```bash
+pip install -r requirements.txt
+```
+
+As principais bibliotecas usadas foram:
+
+* Locust, para executar os testes de performance;
+* pandas, para ler e organizar os resultados em CSV;
+* matplotlib, para gerar os gráficos.
+
+## Como executar com interface web
+
+Para abrir o Locust com interface gráfica, use o comando:
+
+```bash
+python -m locust -f locustfile.py --host https://restful-booker.herokuapp.com
+```
+
+Depois acesse no navegador:
+
+```text
+http://localhost:8089
+```
+
+Na tela do Locust é possível informar a quantidade de usuários e a taxa de subida manualmente para acompanhar o teste em tempo real.
+
+## Como executar com Docker
+
+Também é possível executar o projeto usando Docker e Docker Compose.
+
+Para subir o Locust pelo Docker, use:
+
+```bash
+docker compose up --build
+```
+
+Depois acesse no navegador:
+
+```text
+http://localhost:8089
+```
+
+Na tela do Locust, informe a quantidade de usuários, a taxa de subida e mantenha o host como:
+
+```text
+https://restful-booker.herokuapp.com
+```
+
+Para parar a execução, use `CTRL + C` no terminal e depois rode:
+
+```bash
+docker compose down
+```
+## Como gerar os gráficos
+
+Depois de executar os testes e gerar os arquivos CSV dentro da pasta `resultados`, os gráficos podem ser gerados com o comando:
+
+```bash
+python analisar_resultados.py
+```
+
+Esse script lê os arquivos CSV dos testes com 20, 75 e 150 usuários, mostra um resumo no terminal e gera os gráficos dentro da pasta `graficos`.
+
+Os gráficos gerados são:
+
+* tempo médio de resposta;
+* percentis p90 e p95;
+* throughput, ou seja, requisições por segundo;
+* total de falhas.
+
+## Estrutura do projeto
+
+```text
+trabalho-performance-locust/
+│
+├── locustfile.py
+├── analisar_resultados.py
+├── requirements.txt
+├── Dockerfile
+├── docker-compose.yml
+├── README.md
+│
+├── resultados/
+│   ├── teste_20_stats.csv
+│   ├── teste_75_stats.csv
+│   └── teste_150_stats.csv
+│
+├── graficos/
+│   ├── tempo_medio_resposta.png
+│   ├── percentis_p90_p95.png
+│   ├── throughput.png
+│   └── falhas.png
+│
+└── relatorio/
+    ├── relatorio.md
+    └── relatorio.pdf
+```
