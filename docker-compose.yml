@@ -1,0 +1,8 @@
+services:
+  locust:
+    build: .
+    ports:
+      - "8089:8089"
+    volumes:
+      - .:/app
+    command: python -m locust -f locustfile.py --host https://restful-booker.herokuapp.com
