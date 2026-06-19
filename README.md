@@ -63,6 +63,23 @@ python -m locust -f locustfile.py --headless -u 150 -r 10 -t 1m --host https://r
 
 Cada execução gera arquivos CSV com os dados do teste, como número de requisições, falhas, tempo médio de resposta, requisições por segundo.
 
+## Execução automática completa
+
+Além dos comandos individuais do Locust, foi criado o arquivo `executar_tudo.py` para automatizar a execução completa do trabalho.
+
+Esse script executa os três testes de carga em modo headless, usando 20, 75 e 150 usuários simultâneos. Depois disso, ele chama o arquivo `analisar_resultados.py`, que lê os CSVs gerados pelo Locust e cria os gráficos na pasta `graficos`.
+
+Ao final da execução, o script também gera automaticamente o arquivo `relatorio/relatorio_dinamico.pdf`, contendo os principais resultados dos testes, os cenários utilizados, os gráficos e uma análise automática dos dados.
+
+Para executar todo o processo de uma vez, use:
+
+```bash
+python executar_tudo.py
+```
+
+Esse comando atualiza os arquivos CSV, recria os gráficos e gera o PDF dinâmico com base nos resultados mais recentes.
+
+
 ## Como instalar o projeto
 
 Para executar o projeto localmente, primeiro é necessário instalar as dependências do Python.
@@ -75,7 +92,9 @@ As principais bibliotecas usadas foram:
 
 * Locust, para executar os testes de performance;
 * pandas, para ler e organizar os resultados em CSV;
-* matplotlib, para gerar os gráficos.
+* matplotlib, para gerar os gráficos;
+* reportlab, para gerar o relatório dinâmico em PDF.
+
 
 ## Como executar com interface web
 
@@ -139,20 +158,32 @@ Os gráficos gerados são:
 
 ## Estrutura do projeto
 
+## Estrutura do projeto
+
 ```text
 trabalho-performance-locust/
 │
 ├── locustfile.py
 ├── analisar_resultados.py
+├── executar_tudo.py
 ├── requirements.txt
 ├── Dockerfile
 ├── docker-compose.yml
 ├── README.md
-│
+│ 
 ├── resultados/
 │   ├── teste_20_stats.csv
+│   ├── teste_20_stats_history.csv
+│   ├── teste_20_failures.csv
+│   ├── teste_20_exceptions.csv
 │   ├── teste_75_stats.csv
-│   └── teste_150_stats.csv
+│   ├── teste_75_stats_history.csv
+│   ├── teste_75_failures.csv
+│   ├── teste_75_exceptions.csv
+│   ├── teste_150_stats.csv
+│   ├── teste_150_stats_history.csv
+│   ├── teste_150_failures.csv
+│   └── teste_150_exceptions.csv
 │
 ├── graficos/
 │   ├── tempo_medio_resposta.png
@@ -162,5 +193,6 @@ trabalho-performance-locust/
 │
 └── relatorio/
     ├── relatorio.md
-    └── relatorio.pdf
+    ├── relatorio.pdf
+    └── relatorio_dinamico.pdf
 ```
