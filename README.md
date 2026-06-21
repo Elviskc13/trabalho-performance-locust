@@ -158,8 +158,6 @@ Os gráficos gerados são:
 
 ## Estrutura do projeto
 
-## Estrutura do projeto
-
 ```text
 trabalho-performance-locust/
 │
